@@ -1,18 +1,19 @@
 #include "Cell.h"
 #include "NumberBroadcaster.h"
+#include "types/Subscribers.h"
 
 //SUBSCRIBERS
-NumberBroadcaster::Subscribers NumberBroadcaster::boxSubscribers(){
+Subscribers NumberBroadcaster::boxSubscribers(){
     static std::unordered_map<int, std::vector<Cell*>> boxSubscribers;
     return boxSubscribers;
 }
 
-NumberBroadcaster::Subscribers NumberBroadcaster::rowSubscribers(){
+Subscribers NumberBroadcaster::rowSubscribers(){
     static std::unordered_map<int, std::vector<Cell*>> rowSubscribers;
     return rowSubscribers;
 }
 
-NumberBroadcaster::Subscribers NumberBroadcaster::columnSubscribers(){
+Subscribers NumberBroadcaster::columnSubscribers(){
     static std::unordered_map<int, std::vector<Cell*>> columnSubscribers;
     return columnSubscribers;
 }
@@ -49,6 +50,14 @@ void NumberBroadcaster::notify( std::vector<Cell*> subscribers, int value ){
 
 }
 
+void NumberBroadcaster::broadcast( int boxNum, int rowNum, int columnNum, int value ){
+
+    NumberBroadcaster::notifyBox( boxNum, value);
+    NumberBroadcaster::notifyRow( rowNum, value );
+    NumberBroadcaster::notifyColumn( columnNum, value );
+
+}
+
 void NumberBroadcaster::notifyBox( int boxNum, int value ){
 
     auto it = NumberBroadcaster::boxSubscribers().find(boxNum);
@@ -73,13 +82,6 @@ void NumberBroadcaster::notifyColumn( int columnNum, int value ){
 
 }
 
-
-// void NumberBroadcaster::numberInBox( int boxNum, int value ){
-
-    
-
-// }
-
 void NumberBroadcaster::printSubscribed(){
 
     for (auto box : NumberBroadcaster::boxSubscribers()){
@@ -88,7 +90,7 @@ void NumberBroadcaster::printSubscribed(){
 
         for(Cell *cell : box.second) {
         
-            std::cout << cell->value << " , ";
+            std::cout << cell->getValue() << " , ";
         
         }
 

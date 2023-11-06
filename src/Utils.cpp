@@ -8,15 +8,39 @@ class Utils {
 
     public:
 
-        static void iterateGrid( Cell *grid[9][9] ){
+        static void drawGrid( Cell *grid[9][9] ){
+
+            int placeBorderCounter = 0;
 
             for (int i = 0; i < 9; i++) {
+
+                std::cout << " | ";
  
                 for (int j = 0; j < 9; j++) {
-                    std::cout << "Il valore nella riga " << i << " colonna " << j << " è " << grid[i][j]->value << std::endl;
+
+                    std::cout << grid[i][j]->getValue();
+                    placeBorderCounter++;
+
+                    if(placeBorderCounter == 3){
+                        std::cout << " | ";
+                        placeBorderCounter = 0;
+                    }
+
                 }
 
+                std::cout << std::endl;
+
             }
+        }
+
+        static void iterateHashmap( PossibilityHashmap possibilityHashmap ){
+
+            for (auto const& x : possibilityHashmap){
+
+                std::cout << x.first << ':' << x.second << std::endl;
+
+            }
+
         }
 
 };

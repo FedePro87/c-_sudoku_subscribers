@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "types/Subscribers.h"
+
 class NumberBroadcaster {
 
     private :
@@ -14,7 +16,6 @@ class NumberBroadcaster {
     public :
 
         //SUBSCRIBERS
-        typedef std::unordered_map<int, std::vector<Cell*>>& Subscribers;
         static Subscribers boxSubscribers();
         static Subscribers rowSubscribers();
         static Subscribers columnSubscribers();
@@ -28,13 +29,11 @@ class NumberBroadcaster {
 
         //Notifiers
         static void notify( std::vector<Cell*> subscribers, int value );
+        static void broadcast( int boxNum, int rowNum, int columnNum, int value );
         static void notifyBox( int boxNum, int value );
         static void notifyRow( int rowNum, int value );
         static void notifyColumn( int columnNum, int value );
         
-
-        // static void numberInBox( int boxNum, int value );
-
 
         static void printSubscribed();
 

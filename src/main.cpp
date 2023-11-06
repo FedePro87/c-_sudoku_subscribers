@@ -1,5 +1,6 @@
 #include "Cell.h"
 #include "NumberBroadcaster.h"
+#include "Utils.cpp"
 
 Cell *grid[9][9] = {
 	{ new Cell(0,0,0,0), new Cell(0,0,1,0), new Cell(0,0,2,0), new Cell(1,0,3,4), new Cell(1,0,4,0), new Cell(1,0,5,0), new Cell(2,0,6,0), new Cell(2,0,7,0), new Cell(2,0,8,0) },
@@ -15,11 +16,28 @@ Cell *grid[9][9] = {
 
 void traverseGrid( Cell *grid[9][9] ){
 
-	for (int i = 0; i < 9; i++) {
+	for (int row = 0; row < 9; row++) {
  
-        for (int j = 0; j < 9; j++) {
+        for (int column = 0; column < 9; column++) {
 
+			Cell cell = *grid[row][column];
 
+			//Check if cell has 0.
+			if(cell.getValue() == 0){
+
+				//If has 0, check if has only canPlace number possibility
+				if(cell.getCanPlace().size() == 1){
+					int placingValue = cell.getCanPlace().begin()->first;
+					cell.setValue(placingValue);
+					NumberBroadcaster::broadcast( cell.getBoxNum(), row, column, placingValue );
+				}
+
+			}
+			//Else, broadcast this value.
+			else {
+				int placingValue = cell.getValue();
+				NumberBroadcaster::broadcast( cell.getBoxNum(), row, column, placingValue );
+			}
             
         }
 
@@ -29,7 +47,13 @@ void traverseGrid( Cell *grid[9][9] ){
 
 int main(){
 
-	// NumberBroadcaster::printSubscribed();
+	Utils::drawGrid( grid );
+
+    std::cout << std::endl;
+    std::cout << std::endl;
+	traverseGrid( grid );
+
+	Utils::drawGrid( grid );
 
 	return 0;
 

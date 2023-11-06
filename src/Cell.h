@@ -3,30 +3,34 @@
 
 #include <unordered_map>
 
+#include "types/PossibilityHashmap.h"
+
 class Cell {
 
     private :
 
-        std::unordered_map<int, bool> canPlace;
+        int boxNum;
+        int rowNum;
+        int columnNum;
+        int value;
+
+        PossibilityHashmap canPlace;
 
     public :
-
-        //Box a cui appartiene
-        int boxNum;
-
-        //Riga a cui appartiene
-        int rowNum;
-
-        //Colonna a cui appartiene
-        int columnNum;
-
-        //Valore nella cella
-        int value;
     
+        //Constructors
         Cell( int boxNum, int rowNum, int columnNum, int value );
 
-
+        //Class methods
         void updateCanPlace( int value );
+
+        //GETTERS
+        int getValue();
+        int getBoxNum();
+        PossibilityHashmap getCanPlace();
+
+        //SETTERS
+        void setValue( int value );
 
 };
 
